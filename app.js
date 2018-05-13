@@ -1,10 +1,10 @@
 // Enemies our player must avoid 
 var InGameObjects = function (x, y) {
-	this.start = 0;
-	this.end = 500;	
-	this.x = 0;
-	this.y = 0;
-	this.sprite;
+    this.start = 0;
+    this.end = 500; 
+    this.x = 0;
+    this.y = 0;
+    this.sprite;
 }
 
 
@@ -12,12 +12,13 @@ var InGameObjects = function (x, y) {
 
 var allEnemies = [];
 
-var Enemy = function(x, y) {
+var Enemy = function(x) {
     InGameObjects.call(this, Enemy);
     
     this.sprite = 'images/enemy-bug.png';
     this.width = 52;
-	this.height = 55;	
+    this.height = 55; 
+
 };
 
 Enemy.prototype = Object.create(InGameObjects.prototype);
@@ -25,28 +26,28 @@ Enemy.prototype.constructor = Enemy;
 
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-	this.y = 60;
-	
-	for (var i = 0; i < allEnemies.length; i++) {
-		allEnemies[i].start = (Math.floor(Math.random() * (-2000)) + 2);
-		// bugs speed
-		allEnemies[i].x += (50 * dt); 
-		// bugs y-position
-		allEnemies[i].y = allEnemies[i].y + 80; 
+    
 
-		 
+    
+    for (var i = 0; i < allEnemies.length; i++) {
+        allEnemies[i].start = (Math.floor(Math.random() * (-2000)) + 2);
+        // bugs speed
+        allEnemies[i].x += (50 * dt); 
+        //allEnemies[i].y = allEnemies[i].y + 80;
 
-		//stay inside map (y)
-		if (allEnemies[i].y > 220) {
-			allEnemies[i].y = 60;
-		}
+         this.checkCollisions();
 
-		//stay inside map (x)
-		if (allEnemies[i].x >= this.end) {
-			allEnemies[i].x = allEnemies[i].start;
-		}
-	}
-	this.checkCollisions();
+        //stay inside map (y)
+        if (allEnemies[i].y > 220) {
+            allEnemies[i].y = 60;
+        }
+
+        //stay inside map (x)
+        if (allEnemies[i].x >= this.end) {
+            allEnemies[i].x = allEnemies[i].start;
+        }
+    }
+    
 };
 
     
@@ -59,15 +60,16 @@ Enemy.prototype.render = function() {
 };
 
 Enemy.prototype.checkCollisions = function() {
-	if (player.x < this.x + this.width &&
+    if (player.x < this.x + this.width &&
    player.x + player.width > this.x &&
    player.y < this.y + this.height &&
    player.height + player.y > this.y) {
     // collision detected!
-   player.x = 305;
-   player.y = 400;
- }	
+   player.x = 200;
+   player.y = 385;
+ }  
 };
+
 
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
@@ -82,16 +84,16 @@ allEnemies.push(enemy5);
 
 
 var Player = function() {
-	InGameObjects.call(this, Player);
-	//start position player
-	this.x = 200; 
-	this.y = 385;
+    InGameObjects.call(this, Player);
+    //start position player
+    this.x = 200; 
+    this.y = 385;
 
-	// player dimensions
-	this.width = 52;
-	this.height = 55;
+    // player dimensions
+    this.width = 52;
+    this.height = 55;
 
-	this.sprite = 'images/char-princess-girl.png';
+    this.sprite = 'images/char-princess-girl.png';
 }
 
 Player.prototype = Object.create(InGameObjects);
@@ -102,18 +104,18 @@ Player.prototype.update = function() {
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	};
+    };
 
 Player.prototype.handleInput = function(direction) { 
-	  if (direction === 'left' && this.x > 25) {
-		this.x -= 100;
-	} if (direction === 'right' && this.x < 400) {
-		this.x += 100;
-	} if (direction === 'up' && this.y > 0) {
-		this.y -= 82.5;
-	} if (direction === 'down' && this.y < 400) {
-		this.y += 82.5;
-	}
+      if (direction === 'left' && this.x > 25) {
+        this.x -= 100;
+    } if (direction === 'right' && this.x < 400) {
+        this.x += 100;
+    } if (direction === 'up' && this.y > 0) {
+        this.y -= 82.5;
+    } if (direction === 'down' && this.y < 400) {
+        this.y += 82.5;
+    }
 };
 
 
