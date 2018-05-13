@@ -1,6 +1,21 @@
-frontend-nanodegree-arcade-game
-===============================
+# Memory Game Project
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Table of Contents
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+* [How to play](#how-to-play)
+* [Where to play](#where-to-play)
+* [Code dependencies](##code-dependencies) 
+
+## How to play 
+Here you can play a classic arcade game. This one is a so called "frogger" clone. Try to make your way to the water without being hit by the enemies! 
+
+## Where to play 
+
+Follow this link to play the game: [Click here!](https://htmlpreview.github.io/?https://github.com/Hannybaby/arcade/blob/master/index.html)  
+
+## Code dependencies  
+The following dependencies are used: 
+
+* Game Engine and Resources powered by Udacity 
+
+* Collision detection help from MDN webdocs -> https://developer.mozilla.org/kab/docs/Games/Techniques/2D_collision_detection
