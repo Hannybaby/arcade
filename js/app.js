@@ -1,28 +1,8 @@
 // Draw objects on screen
-Object.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
-    // When on top reset player
-    if (this.y <= 0) {
-        alert("⛥ Congrats! You won! ⛥ Click OK to play again!");
-        this.reset();
-    }
-};
-
-//Player start position
-Object.prototype.reset = function() {
-    player.x = 200;
-    player.y = 385;
-};
-
-
 // Enemies the player must avoid
 var allEnemies = [];
 var Enemy = function(x, y) {
-
-
     this.sprite = 'images/enemy-bug.png';
-
     //x and y position, speed, dimensions
     this.x = x;
     this.y = y;
@@ -30,7 +10,6 @@ var Enemy = function(x, y) {
     this.height = 55;
     this.speed = Math.floor((Math.random() * 200) + 100);
 }
-
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -42,16 +21,16 @@ Enemy.prototype.update = function(dt) {
         this.x = -2;
     }
 
-    //Collision! 
     if (player.x >= this.x - 50 && player.x <= this.x + 50) {
-        if (player.y >= this.y - 50 && player.y <= this.y + 50) {
-            this.reset();
-        }
-    }
-}
+         if (player.y >= this.y - 50 && player.y <= this.y + 50) {
+           location.reload();
+       }
+     }
+};
 
-
-
+Enemy.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 var Player = function() {
     this.sprite = 'images/char-princess-girl.png';
@@ -59,9 +38,23 @@ var Player = function() {
     this.y = 385;
 }
 
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
-Player.prototype.update = function() {};
+//Player start position
+Player.prototype.reset = function() {
+    this.x = 200;
+    this.y = 385;
+};
 
+Player.prototype.update = function() {
+    // When on top reset player
+    if (this.y <= 0) {
+        alert('⛥ Congrats! You won! ⛥ Click OK to play again!');
+        location.reload();
+    }
+}
 
 //Input handler for player
 Player.prototype.handleInput = function(direction) {
@@ -74,12 +67,10 @@ Player.prototype.handleInput = function(direction) {
     if (direction === 'up' && this.y > 0) {
         this.y -= 82.5;
     }
-    if (direction === 'down' && this.y < 400) {
+    if (direction === 'down' && this.y < 380) {
         this.y += 82.5;
     }
 };
-
-
 
 // Create enemies and player
 
@@ -93,7 +84,6 @@ allEnemies.push(enemy3);
 
 
 var player = new Player();
-
 
 // listens for key presses and sends the keys to 
 // Player.handleInput() method.
