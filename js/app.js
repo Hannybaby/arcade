@@ -54,7 +54,7 @@ Player.prototype.update = function() {
         alert('⛥ Congrats! You won! ⛥ Click OK to play again!');
         location.reload();
     }
-}
+};
 
 //Input handler for player
 Player.prototype.handleInput = function(direction) {
