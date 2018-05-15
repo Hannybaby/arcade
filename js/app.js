@@ -1,5 +1,3 @@
-// Draw objects on screen
-// Enemies the player must avoid
 var allEnemies = [];
 var Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
@@ -9,34 +7,30 @@ var Enemy = function(x, y) {
     this.width = 52;
     this.height = 55;
     this.speed = Math.floor((Math.random() * 200) + 100);
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    //if enemy is off map reset position.
+//if enemy is off map reset position.
     if (this.x <= 550) {
         this.x += this.speed * dt;
     } else {
         this.x = -2;
     }
-
-    if (player.x >= this.x - 50 && player.x <= this.x + 50) {
-         if (player.y >= this.y - 50 && player.y <= this.y + 50) {
-           location.reload();
-       }
-     }
+    checkCollision(this);
 };
 
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
 var Player = function() {
     this.sprite = 'images/char-princess-girl.png';
     this.x = 200;
     this.y = 385;
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -49,14 +43,14 @@ Player.prototype.reset = function() {
 };
 
 Player.prototype.update = function() {
-    // When on top reset player
+// When on top, reset player and gratulate 
     if (this.y <= 0) {
         alert('⛥ Congrats! You won! ⛥ Click OK to play again!');
-        location.reload();
+        this.reset();  
     }
 };
 
-//Input handler for player
+// Input handler for player
 Player.prototype.handleInput = function(direction) {
     if (direction === 'left' && this.x > 25) {
         this.x -= 100;
@@ -72,8 +66,17 @@ Player.prototype.handleInput = function(direction) {
     }
 };
 
-// Create enemies and player
+// Create a collision function
 
+function checkCollision(bug) { 
+    if (player.x >= bug.x - 50 && player.x <= bug.x + 50) {
+         if (player.y >= bug.y - 50 && player.y <= bug.y + 50) {
+           player.reset();
+       }
+     }
+ };
+
+// Create enemies and player
 var enemy1 = new Enemy(-2, 60);
 var enemy2 = new Enemy(-2, 150);
 var enemy3 = new Enemy(-2, 230);
@@ -93,7 +96,7 @@ document.addEventListener('keyup', function(e) {
         38: 'up',
         39: 'right',
         40: 'down'
-    };
+    }; 
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
